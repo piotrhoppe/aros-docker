@@ -13,28 +13,46 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-FROM alpine:latest
+#FROM ubuntu:latest
+#
+#LABEL maintainer="Piotr Hoppe <p_hoppe@poczta.onet.pl>"
+#
+#RUN apk update \
+#    && apk upgrade \
+#    && apk add alpine-sdk git gawk automake subversion \
+#    && mkdir /usr/src \
+#
+#RUN svn checkout http://svn.code.sf.net/p/netpbm/code/stable /usr/src/netpbm
+#
+#COPY config.mk /usr/src/netpbm
+#
+#
+#RUN cd /usr/src/netpbm \
+##    && ./configure \
+#    && make \
+#    && make install
+#
+#RUN git clone https://github.com/ezrec/AROS-mirror.git /usr/src/AROS-mirror bison flex \
+#    && cd /usr/src/AROS-mirror/AROS \
+#    && ./configure \
+#    && make
+#
+#CMD ["/bin/sh"]
+
+FROM ubuntu:latest
 
 LABEL maintainer="Piotr Hoppe <p_hoppe@poczta.onet.pl>"
 
-RUN apk update \
-    && apk upgrade \
-    && apk add alpine-sdk git gawk automake subversion \
-    && mkdir /usr/src \
+RUN apt-get update \
+    && apt-get upgrade \
+    && apt-get -y install build-essential \
+    netpbm gawk git automake bison flex python \
+    libpng++-dev wget libasound2-dev libx11-dev mesa-common-dev libsdl1.2-dev \
+    libxcursor-dev
 
-RUN svn checkout http://svn.code.sf.net/p/netpbm/code/stable /usr/src/netpbm
-
-COPY config.mk /usr/src/netpbm
-
-
-RUN cd /usr/src/netpbm \
+RUN git clone https://github.com/ezrec/AROS-mirror.git /usr/src/AROS-mirror
+#    && cd /usr/src/AROS-mirror/AROS \
 #    && ./configure \
-    && make \
-    && make install
+#    && make
 
-RUN git clone https://github.com/ezrec/AROS-mirror.git /usr/src/AROS-mirror bison flex \
-    && cd /usr/src/AROS-mirror/AROS \
-    && ./configure \
-    && make
-
-CMD ["/bin/sh"]
+CMD ["/bin/bash"]
