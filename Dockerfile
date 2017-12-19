@@ -48,11 +48,18 @@ RUN apt-get update \
     && apt-get -y install build-essential \
     netpbm gawk git automake bison flex python \
     libpng++-dev wget libasound2-dev libx11-dev mesa-common-dev libsdl1.2-dev \
+    libc6-dev-i386 \
     libxcursor-dev
 
 RUN git clone https://github.com/ezrec/AROS-mirror.git /usr/src/AROS-mirror
-#    && cd /usr/src/AROS-mirror/AROS \
-#    && ./configure \
-#    && make
+
+ENV ENABLE_DEBUG ${AROS_ENABLE_DEBUG:-"none"}
+ENV TARGET ${AROS_TARGET:-"linux-x86_64"}
+ENV CPU_QUANTITY ${AROS_CPU_QUANTITY:-"1"}
+
+RUN cd /usr/src/AROS-mirror/AROS \
+    && ./configure --enable-debug=$ENABLE_DEBUG --target=$TARGET \
+    && make "-j"$CPU_QUANTITY \
+    && make default-x11keymaptable
 
 CMD ["/bin/bash"]
