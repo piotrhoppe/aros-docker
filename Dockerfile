@@ -53,13 +53,15 @@ RUN apt-get update \
 
 RUN git clone https://github.com/ezrec/AROS-mirror.git /usr/src/AROS-mirror
 
-ENV ENABLE_DEBUG ${AROS_ENABLE_DEBUG:-"none"}
-ENV TARGET ${AROS_TARGET:-"linux-x86_64"}
-ENV CPU_QUANTITY ${AROS_CPU_QUANTITY:-"1"}
+ARG ENABLE_DEBUG="none"
+ARG TARGET="linux-x86_64"
+ARG CPU_QUANTITY="1"
 
 RUN cd /usr/src/AROS-mirror/AROS \
     && ./configure --enable-debug=$ENABLE_DEBUG --target=$TARGET \
     && make "-j"$CPU_QUANTITY \
     && make default-x11keymaptable
 
-CMD ["/bin/bash"]
+#CMD ["/bin/bash"]
+workdir /usr/src/AROS-mirror/AROS/bin/linux-x86_64/AROS
+CMD ["boot/linux/AROSBootstrap"]
