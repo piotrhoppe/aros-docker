@@ -53,12 +53,13 @@ RUN apt-get update \
 
 RUN git clone https://github.com/ezrec/AROS-mirror.git /usr/src/AROS-mirror
 
-ARG ENABLE_DEBUG="none"
-ARG TARGET="linux-x86_64"
-ARG CPU_QUANTITY="1"
+ARG ENABLE_DEBUG=none
+ARG TARGET=linux-x86_64
+ARG CPU_QUANTITY=1
+ARG ENABLE_X11_SHM=no
 
 RUN cd /usr/src/AROS-mirror/AROS \
-    && ./configure --enable-debug=$ENABLE_DEBUG --target=$TARGET \
+    && ./configure --enable-debug=$ENABLE_DEBUG --target=$TARGET --enable-x11-shm=$ENABLE_X11_SHM \
     && make "-j"$CPU_QUANTITY \
     && make default-x11keymaptable
 
