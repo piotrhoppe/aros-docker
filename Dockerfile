@@ -1,4 +1,4 @@
-# Copyright (C) 2017 Piotr Hoppe <p_hoppe@poczta.onet.pl>
+# Copyright (C) 2018 Piotr Hoppe <p_hoppe@poczta.onet.pl>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -39,12 +39,12 @@
 #
 #CMD ["/bin/sh"]
 
-FROM ubuntu:latest
+FROM ubuntu:16.04
 
 LABEL maintainer="Piotr Hoppe <p_hoppe@poczta.onet.pl>"
 
 RUN apt-get update \
-    && apt-get upgrade \
+    && apt-get upgrade -y \
     && apt-get -y install build-essential \
     netpbm gawk git automake bison flex python \
     libpng++-dev wget libasound2-dev libx11-dev mesa-common-dev libsdl1.2-dev \
