@@ -7,7 +7,7 @@
 #
 xhost +
 echo "Starting AROS Docker Container"
-#docker run --rm -it --name aros -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix aros
+
 docker run --rm -d \
 --name aros \
 -e DISPLAY \

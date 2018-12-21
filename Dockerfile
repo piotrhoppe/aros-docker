@@ -13,32 +13,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#FROM ubuntu:latest
-#
-#LABEL maintainer="Piotr Hoppe <p_hoppe@poczta.onet.pl>"
-#
-#RUN apk update \
-#    && apk upgrade \
-#    && apk add alpine-sdk git gawk automake subversion \
-#    && mkdir /usr/src \
-#
-#RUN svn checkout http://svn.code.sf.net/p/netpbm/code/stable /usr/src/netpbm
-#
-#COPY config.mk /usr/src/netpbm
-#
-#
-#RUN cd /usr/src/netpbm \
-##    && ./configure \
-#    && make \
-#    && make install
-#
-#RUN git clone https://github.com/ezrec/AROS-mirror.git /usr/src/AROS-mirror bison flex \
-#    && cd /usr/src/AROS-mirror/AROS \
-#    && ./configure \
-#    && make
-#
-#CMD ["/bin/sh"]
-
 FROM ubuntu:16.04
 
 LABEL maintainer="Piotr Hoppe <p_hoppe@poczta.onet.pl>"
@@ -63,6 +37,5 @@ RUN cd /usr/src/AROS-mirror/AROS \
     && make "-j"$CPU_QUANTITY \
     && make default-x11keymaptable
 
-#CMD ["/bin/bash"]
 workdir /usr/src/AROS-mirror/AROS/bin/linux-x86_64/AROS
 CMD ["boot/linux/AROSBootstrap"]
